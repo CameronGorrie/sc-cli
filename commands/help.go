@@ -30,12 +30,12 @@ func (help *Help) Usage() {
 
 func helpMessage() {
 	fmt.Fprintf(os.Stderr, `
-	scc [GLOBAL OPTIONS] COMMAND [COMMAND OPTIONS]
-	GLOBAL OPTIONS
-		-h			Remote scsynth host.
-		-p			Remote scsynth port.
-	COMMANDS
-		free		Free nodes.
-	For help with a particular command, "scc help COMMAND"
+sc-cli [GLOBAL OPTIONS] COMMAND [COMMAND OPTIONS]
+GLOBAL OPTIONS
+	-h			Remote scsynth host.
+	-p			Remote scsynth port.
+COMMANDS
+	free		Free nodes.
+For help with a particular command, "scc help COMMAND"
 	`)
 }

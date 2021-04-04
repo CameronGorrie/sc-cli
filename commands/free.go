@@ -38,12 +38,12 @@ func (free *Free) Run(args []string) error {
 
 func (free *Free) Usage() {
 	fmt.Fprintf(os.Stderr, `
-	scc free [COMMAND OPTIONS]
-	COMMAND
-		free					Free nodes.
-	COMMAND OPTIONS
-		--group-id		Free all nodes in a group.
-		--node-id			Free a specific node.
-	For all help options use "scc help"
+sc-cli [COMMAND OPTIONS]
+COMMAND
+	free					Free nodes.
+COMMAND OPTIONS
+	--group-id		Free all nodes in a group.
+	--node-id			Free a specific node.
+For all help options use "scc help"
 	`)
 }
