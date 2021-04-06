@@ -3,14 +3,14 @@ package commands
 import (
 	"errors"
 	"flag"
-	"fmt"
-	"os"
 
 	"github.com/CameronGorrie/sc"
 )
 
 type Free struct {
-	client *sc.Client
+	groupId int
+	nodeId  int
+	client  *sc.Client
 }
 
 func (free *Free) Run(args []string) error {
@@ -18,32 +18,23 @@ func (free *Free) Run(args []string) error {
 		return errors.New("No arguments provided to free")
 	}
 
-	nodeId := flag.Int("node-id", 0, "node id")
-	groupId := flag.Int("group-id", 0, "group id")
-	flag.Parse()
+	fs := flag.NewFlagSet("free", flag.ContinueOnError)
+	fs.IntVar(&free.groupId, "group-id", 0, "group id")
+	fs.IntVar(&free.nodeId, "node-id", 0, "node id")
+	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
 
 	switch {
-	case *groupId != 0:
-		if err := free.client.FreeAll(int32(*groupId)); err != nil {
+	case free.groupId != 0:
+		if err := free.client.FreeAll(int32(free.groupId)); err != nil {
 			return err
 		}
-	case *nodeId != 0:
-		if err := free.client.NodeFree(int32(*nodeId)); err != nil {
+	case free.nodeId != 0:
+		if err := free.client.NodeFree(int32(free.nodeId)); err != nil {
 			return err
 		}
 	}
 
 	return nil
-}
-
-func (free *Free) Usage() {
-	fmt.Fprintf(os.Stderr, `
-sc-cli [COMMAND OPTIONS]
-COMMAND
-	free					Free nodes.
-COMMAND OPTIONS
-	--group-id		Free all nodes in a group.
-	--node-id			Free a specific node.
-For all help options use "scc help"
-	`)
 }
