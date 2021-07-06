@@ -11,6 +11,7 @@ type Help struct {
 
 func (help *Help) Run(args []string) error {
 	Usage()
+
 	return nil
 }
 
@@ -19,6 +20,6 @@ func Usage() {
 sc-cli COMMAND [COMMAND OPTIONS]
 COMMANDS
 	free		Free nodes.
-For help with a particular command, "scc COMMAND -h"
+For help with a particular command, "sc-cli COMMAND -h"
 	`)
 }
