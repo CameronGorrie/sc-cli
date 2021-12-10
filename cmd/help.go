@@ -1,4 +1,4 @@
-package commands
+package cmd
 
 import (
 	"fmt"
@@ -19,7 +19,7 @@ func Usage() {
 	fmt.Fprintf(os.Stderr, `
 sc-cli COMMAND [COMMAND OPTIONS]
 COMMANDS
-	free		Free nodes.
+	free		Free groups and nodes.
 For help with a particular command, "sc-cli COMMAND -h"
 	`)
 }
