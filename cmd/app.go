@@ -47,6 +47,7 @@ func (app *App) createCommands() error {
 
 	app.Commands = map[string]Command{
 		"free": &Free{client: c},
+		"send": &Send{client: c},
 		"help": &Help{Commands: app.Commands},
 	}
 
