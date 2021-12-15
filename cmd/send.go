@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/CameronGorrie/sc"
-	"github.com/sc-cli/ugens"
 )
 
 type Send struct {
@@ -29,14 +28,13 @@ func (s *Send) Run(args []string) error {
 
 	ugenNames := strings.Split(s.ugenList, ",")
 	for _, name := range ugenNames {
+		// do a lookup in the complete dictionary of sc-ugens package
 		if f, ok := ugens.Ugens[name]; !ok {
 			errMsg := fmt.Sprintf("no matching ugen found for name %s ", name)
 
 			return errors.New(errMsg)
 		} else {
-			if err := s.client.SendDef(sc.NewSynthdef(name, f)); err != nil {
-				return err
-			}
+			return s.client.SendDef(sc.NewSynthdef(name, f))
 		}
 	}
 
