@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/sc-cli/cmd"
+	"github.com/CameronGorrie/scc/cmd"
 )
 
 func main() {
