@@ -16,7 +16,7 @@ type Command interface {
 	Run(args []string) error
 }
 
-// NewApp creates the sc-cli app and returns its exit status.
+// NewApp creates the scc app and returns its exit status.
 func NewApp(args []string) int {
 	var app App
 	if err := app.createCommands(); err != nil {

@@ -17,9 +17,9 @@ func (help *Help) Run(args []string) error {
 
 func Usage() {
 	fmt.Fprintf(os.Stderr, `
-sc-cli COMMAND [COMMAND OPTIONS]
+scc COMMAND [COMMAND OPTIONS]
 COMMANDS
 	free		Free groups and nodes.
-For help with a particular command, "sc-cli COMMAND -h"
+For help with a particular command, "scc COMMAND -h"
 	`)
 }
