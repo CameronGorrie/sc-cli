@@ -4,8 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"os"
-
-	"github.com/CameronGorrie/sc"
 )
 
 type App struct {
@@ -19,10 +17,6 @@ type Command interface {
 // NewApp creates the scc app and returns its exit status.
 func NewApp(args []string) int {
 	var app App
-	if err := app.createCommands(); err != nil {
-		fmt.Fprintf(os.Stderr, "[createCommands] %s", err.Error())
-		return 2
-	}
 
 	cmd, err := app.parse(args)
 	if err != nil {
@@ -38,16 +32,11 @@ func NewApp(args []string) int {
 	return 0
 }
 
-// createCommands connects to a running SuperCollider client and creates a map of available commands.
+// createCommands creates a map of available commands.
 func (app *App) createCommands() error {
-	c, err := sc.DefaultClient()
-	if err != nil {
-		return err
-	}
-
 	app.Commands = map[string]Command{
-		"free": &Free{client: c},
-		"send": &Send{client: c},
+		"free": &Free{},
+		"send": &Send{},
 		"help": &Help{Commands: app.Commands},
 	}
 
@@ -58,6 +47,10 @@ func (app *App) createCommands() error {
 func (app *App) parse(args []string) (Command, error) {
 	if len(args) == 0 {
 		return nil, errors.New("command not provided ")
+	}
+
+	if err := app.createCommands(); err != nil {
+		return nil, err
 	}
 
 	cmd, ok := app.Commands[args[0]]

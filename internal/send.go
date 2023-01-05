@@ -11,8 +11,8 @@ import (
 )
 
 type Send struct {
+	port     int
 	ugenList string
-	client   *sc.Client
 }
 
 func (s *Send) Run(args []string) error {
@@ -22,8 +22,14 @@ func (s *Send) Run(args []string) error {
 
 	fs := flag.NewFlagSet("send", flag.ContinueOnError)
 	fs.StringVar(&s.ugenList, "ugens", "", "A comma delimited list of Ugen names")
+	fs.IntVar(&s.port, "u", 57120, "UDP port")
 
 	if err := fs.Parse(args[1:]); err != nil {
+		return err
+	}
+
+	c, err := NewClient(s.port)
+	if err != nil {
 		return err
 	}
 
@@ -34,7 +40,7 @@ func (s *Send) Run(args []string) error {
 
 			return errors.New(errMsg)
 		} else {
-			return s.client.SendDef(sc.NewSynthdef(name, f))
+			return c.SendDef(sc.NewSynthdef(name, f))
 		}
 	}
 
