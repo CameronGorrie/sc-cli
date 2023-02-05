@@ -3,13 +3,15 @@ package cmd
 import (
 	"errors"
 	"flag"
+
+	"github.com/CameronGorrie/sc"
 )
 
 type Free struct {
-	port    int
-	freeAll bool
-	groupId int
-	nodeId  int
+	scsynthAddr string
+	freeAll     bool
+	groupId     int
+	nodeId      int
 }
 
 func (f *Free) Run(args []string) error {
@@ -18,16 +20,16 @@ func (f *Free) Run(args []string) error {
 	}
 
 	fs := flag.NewFlagSet("free", flag.ContinueOnError)
-	fs.IntVar(&f.groupId, "gid", 0, "group id")
+	fs.IntVar(&f.groupId, "gid", int(sc.DefaultGroupID), "group id")
 	fs.IntVar(&f.nodeId, "id", 0, "node id")
-	fs.IntVar(&f.port, "u", 57120, "UDP port")
+	fs.StringVar(&f.scsynthAddr, "u", sc.DefaultScsynthAddr, "remote address for scsynth")
 	fs.BoolVar(&f.freeAll, "a", true, "all")
 
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
 
-	c, err := NewClient(f.port)
+	c, err := NewClient(f.scsynthAddr)
 	if err != nil {
 		return err
 	}

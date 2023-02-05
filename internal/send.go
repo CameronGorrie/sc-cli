@@ -11,8 +11,8 @@ import (
 )
 
 type Send struct {
-	port     int
-	ugenList string
+	scsynthAddr string
+	ugenList    string
 }
 
 func (s *Send) Run(args []string) error {
@@ -22,13 +22,13 @@ func (s *Send) Run(args []string) error {
 
 	fs := flag.NewFlagSet("send", flag.ContinueOnError)
 	fs.StringVar(&s.ugenList, "ugens", "", "A comma delimited list of Ugen names")
-	fs.IntVar(&s.port, "u", 57120, "UDP port")
+	fs.StringVar(&s.scsynthAddr, "u", sc.DefaultScsynthAddr, "remote address for scsynth")
 
 	if err := fs.Parse(args[1:]); err != nil {
 		return err
 	}
 
-	c, err := NewClient(s.port)
+	c, err := NewClient(s.scsynthAddr)
 	if err != nil {
 		return err
 	}
