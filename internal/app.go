@@ -38,7 +38,7 @@ func NewApp(args []string) int {
 	}
 
 	if err := sCmd.cmd.ParseFlags(sCmd.fs, args[1:]); err != nil {
-		fmt.Fprintf(os.Stderr, "[] %s\n", err.Error())
+		fmt.Fprintf(os.Stderr, "%s\n", err.Error())
 		return 2
 	}
 
