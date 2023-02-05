@@ -1,12 +1,13 @@
 package cmd
 
 import (
+	"flag"
 	"fmt"
 	"os"
 )
 
 type Help struct {
-	Commands map[string]Command
+	Subcommands map[string]*flag.FlagSet
 }
 
 func (help *Help) Run(args []string) error {

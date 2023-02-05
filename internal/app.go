@@ -1,62 +1,103 @@
 package cmd
 
 import (
-	"errors"
+	"flag"
 	"fmt"
 	"os"
+
+	"github.com/CameronGorrie/sc"
 )
 
 type App struct {
-	Commands map[string]Command
+	commands    map[string]Command
+	scsynthAddr string
+	help        bool
 }
 
-type Command interface {
-	Run(args []string) error
+type Command struct {
+	fs  *flag.FlagSet
+	cmd Action
+}
+
+type Action interface {
+	Run(c *sc.Client) error
+	ParseFlags(fs *flag.FlagSet, args []string) error
 }
 
 // NewApp creates the scc app and returns its exit status.
 func NewApp(args []string) int {
 	var app App
 
-	cmd, err := app.parse(args)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "[parse] %s", err.Error())
+	app.createCommands()
+	app.setupCommonFlags()
+
+	sCmd := app.commands[args[0]]
+	if sCmd.fs == nil {
+		fmt.Fprintf(os.Stderr, "[parse] %s\n", args[1])
 		return 2
 	}
 
-	if err := cmd.Run(args); err != nil {
-		fmt.Fprintf(os.Stderr, "[command] %s", err.Error())
+	if err := sCmd.cmd.ParseFlags(sCmd.fs, args[1:]); err != nil {
+		fmt.Fprintf(os.Stderr, "[] %s\n", err.Error())
+		return 2
+	}
+
+	c, err := NewClient(app.scsynthAddr)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "[client] %s\n", err.Error())
+		return 1
+	}
+
+	if printUsage(args) {
+		sCmd.fs.Usage()
+		return 0
+	}
+
+	if err := sCmd.cmd.Run(c); err != nil {
+		fmt.Fprintf(os.Stderr, "[command] %s\n", err.Error())
 		return 1
 	}
 
 	return 0
 }
 
-// createCommands creates a map of available commands.
-func (app *App) createCommands() error {
-	app.Commands = map[string]Command{
-		"free": &Free{},
-		"send": &Send{},
-		"help": &Help{Commands: app.Commands},
-	}
+// createCommands creates a map of available commands with their flagsets.
+func (app *App) createCommands() {
+	freeCmd := flag.NewFlagSet("free", flag.ContinueOnError)
+	sendCmd := flag.NewFlagSet("send", flag.ContinueOnError)
 
-	return nil
+	app.commands = map[string]Command{
+		freeCmd.Name(): {fs: freeCmd, cmd: &Free{}},
+		sendCmd.Name(): {fs: sendCmd, cmd: &Send{}},
+	}
 }
 
-// parse reads the command arguments provided to the app.
-func (app *App) parse(args []string) (Command, error) {
-	if len(args) == 0 {
-		return nil, errors.New("command not provided ")
+// setupCommonFlags creates a common flag for each command.
+func (app *App) setupCommonFlags() {
+	for _, sCmd := range app.commands {
+		sCmd.fs.StringVar(
+			&app.scsynthAddr,
+			"u",
+			sc.DefaultScsynthAddr,
+			"remote address for scsynth",
+		)
+
+		sCmd.fs.BoolVar(
+			&app.help,
+			"h",
+			false,
+			"print command usage",
+		)
+	}
+}
+
+func printUsage(args []string) bool {
+	fmt.Println(args)
+	for _, arg := range args {
+		if arg == "-h" {
+			return true
+		}
 	}
 
-	if err := app.createCommands(); err != nil {
-		return nil, err
-	}
-
-	cmd, ok := app.Commands[args[0]]
-	if !ok {
-		return nil, errors.New("unrecognized command: " + args[0] + " ")
-	}
-
-	return cmd, nil
+	return false
 }

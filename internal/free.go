@@ -3,41 +3,24 @@ package cmd
 import (
 	"errors"
 	"flag"
+	"fmt"
 
 	"github.com/CameronGorrie/sc"
 )
 
 type Free struct {
-	scsynthAddr string
-	freeAll     bool
-	groupId     int
-	nodeId      int
+	freeAll bool
+	groupId int
+	nodeId  int
 }
 
-func (f *Free) Run(args []string) error {
-	if len(args[1:]) == 0 {
-		return errors.New("no arguments provided to free ")
-	}
-
-	fs := flag.NewFlagSet("free", flag.ContinueOnError)
-	fs.IntVar(&f.groupId, "gid", int(sc.DefaultGroupID), "group id")
-	fs.IntVar(&f.nodeId, "id", 0, "node id")
-	fs.StringVar(&f.scsynthAddr, "u", sc.DefaultScsynthAddr, "remote address for scsynth")
-	fs.BoolVar(&f.freeAll, "a", true, "all")
-
-	if err := fs.Parse(args[1:]); err != nil {
-		return err
-	}
-
-	c, err := NewClient(f.scsynthAddr)
-	if err != nil {
-		return err
-	}
-
+func (f *Free) Run(c *sc.Client) error {
 	if f.freeAll {
 		if err := c.FreeAll(int32(f.groupId)); err != nil {
 			return err
 		}
+
+		fmt.Println("freed all nodes")
 		return nil
 	}
 
@@ -45,12 +28,32 @@ func (f *Free) Run(args []string) error {
 		if err := c.FreeAll(int32(f.groupId)); err != nil {
 			return err
 		}
+
+		fmt.Println("freed all nodes in group", f.groupId)
+		return nil
 	}
 
 	if f.nodeId != 0 {
 		if err := c.NodeFree(int32(f.nodeId)); err != nil {
 			return err
 		}
+		fmt.Println("freed node", f.nodeId)
+	}
+
+	return nil
+}
+
+func (f *Free) ParseFlags(fs *flag.FlagSet, args []string) error {
+	if len(args) == 0 {
+		return errors.New("no arguments provided to free ")
+	}
+
+	fs.IntVar(&f.groupId, "gid", int(sc.DefaultGroupID), "group id")
+	fs.IntVar(&f.nodeId, "id", 0, "node id")
+	fs.BoolVar(&f.freeAll, "a", true, "all")
+
+	if err := fs.Parse(args[0:]); err != nil {
+		return err
 	}
 
 	return nil
