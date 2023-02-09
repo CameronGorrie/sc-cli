@@ -3,7 +3,6 @@ package cmd
 import (
 	"errors"
 	"flag"
-	"fmt"
 
 	"github.com/CameronGorrie/sc"
 )
@@ -20,7 +19,6 @@ func (f *Free) Run(c *sc.Client) error {
 			return err
 		}
 
-		fmt.Println("freed all nodes")
 		return nil
 	}
 
@@ -29,7 +27,6 @@ func (f *Free) Run(c *sc.Client) error {
 			return err
 		}
 
-		fmt.Println("freed all nodes in group", f.groupId)
 		return nil
 	}
 
@@ -37,7 +34,6 @@ func (f *Free) Run(c *sc.Client) error {
 		if err := c.NodeFree(int32(f.nodeId)); err != nil {
 			return err
 		}
-		fmt.Println("freed node", f.nodeId)
 	}
 
 	return nil

@@ -92,7 +92,6 @@ func (app *App) setupCommonFlags() {
 }
 
 func printUsage(args []string) bool {
-	fmt.Println(args)
 	for _, arg := range args {
 		if arg == "-h" {
 			return true
