@@ -1,32 +1,51 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"os"
+	"time"
 
-	cmd "github.com/CameronGorrie/scc/internal"
+	"github.com/CameronGorrie/scc/pkg/client"
+	"github.com/CameronGorrie/scc/pkg/freecmd"
+	"github.com/CameronGorrie/scc/pkg/playcmd"
+	"github.com/CameronGorrie/scc/pkg/rootcmd"
+	"github.com/CameronGorrie/scc/pkg/sendcmd"
+	"github.com/peterbourgon/ff/v3/ffcli"
 )
 
 func main() {
-	if len(os.Args) <= 1 {
-		helpMsg := `NAME:
-	scc - Supercollider CLI
- 
-USAGE:
-	scc [global options] command [command options] [arguments...]
- 
-COMMANDS:
-	free	Frees nodes in a running instance of scsynth
-	send	Creates and sends synthdefs to a running instance of scsynth
- 
-GLOBAL OPTIONS:
-	-h	Show help for a command
-	-u	The remote address for scsynth
-`
+	var (
+		out         = os.Stdout
+		cmd, cfg    = rootcmd.New()
+		freeCommand = freecmd.New(cfg, out)
+		sendCommand = sendcmd.New(cfg, out)
+		playCommand = playcmd.New(cfg, out)
+	)
 
-		fmt.Println(helpMsg)
-		os.Exit(0)
+	cmd.Subcommands = []*ffcli.Command{
+		freeCommand,
+		sendCommand,
+		playCommand,
 	}
 
-	os.Exit(cmd.NewApp(os.Args[1:]))
+	if err := cmd.Parse(os.Args[1:]); err != nil {
+		fmt.Fprintf(os.Stderr, "error during Parse: %v\n", err)
+		os.Exit(1)
+	}
+
+	client, err := client.NewClient(cfg.LocalAddr, cfg.SynthAddr)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "error constructing SuperCollider client: %v\n", err)
+		os.Exit(1)
+	}
+
+	cfg.Client = client
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(2*time.Second))
+	defer cancel()
+
+	if err := cmd.Run(ctx); err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
+		os.Exit(1)
+	}
 }
