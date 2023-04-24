@@ -1,10 +1,13 @@
-github.com/CameronGorrie/sc v0.1.4 h1:76VNt/+2mFTBJBPN3OSjDX7tzQLzQYrYJabnQhDUdXE=
-github.com/CameronGorrie/sc v0.1.4/go.mod h1:EHhU+SQxE8HhZ/Foy9xKJwEbxBb1za0daqzn6IqIG8I=
-github.com/CameronGorrie/ugens v0.2.1 h1:7TK1Tm3qre5BZV6Dd9UsMZJ7a3tuvxj0LdkYpybJUdk=
-github.com/CameronGorrie/ugens v0.2.1/go.mod h1:ngR2LMcDKYcFieERPFYzsiu/gWmbsn8PRaIkebickn0=
+github.com/CameronGorrie/sc v0.1.7 h1:xB9d0Pp7QGDGzPHRUue/+CkMuIKV4UboMlY/uY7yKmI=
+github.com/CameronGorrie/sc v0.1.7/go.mod h1:EHhU+SQxE8HhZ/Foy9xKJwEbxBb1za0daqzn6IqIG8I=
 github.com/imdario/go-ulid v0.0.0-20180116185620-aeb52bf96595 h1:8MKHx/6AMMFGslqvr37RF7zktr3eJmY1z2FKdq3Zo/o=
 github.com/imdario/go-ulid v0.0.0-20180116185620-aeb52bf96595/go.mod h1:ugPCasYVpR6Cf8xlF0vkZdVKntj7zTgo9pLR4Si7Boo=
+github.com/pelletier/go-toml v1.9.5/go.mod h1:u1nR/EPcESfeI/szUZKdtJ0xRNbUoANCkoOuaOx1Y+c=
+github.com/peterbourgon/ff/v3 v3.3.0 h1:PaKe7GW8orVFh8Unb5jNHS+JZBwWUMa2se0HM6/BI24=
+github.com/peterbourgon/ff/v3 v3.3.0/go.mod h1:zjJVUhx+twciwfDl0zBcFzl4dW8axCRyXE/eKY9RztQ=
 github.com/pkg/errors v0.9.1 h1:FEBLx1zS214owpjy7qsBeixbURkuhQAwrK5UwLGTwt4=
 github.com/pkg/errors v0.9.1/go.mod h1:bwawxfHBFNV+L2hUp1rHADufV3IMtnDRdf1r5NINEl0=
 github.com/scgolang/osc v0.10.0 h1:2exVuzOpyiSKvx+wLJScAUmIw5i0diH3YhTNKD9xB7I=
 github.com/scgolang/osc v0.10.0/go.mod h1:fu5QITvJ5w2pzKXJBmyVTF89ZycPN4bS4cOHJErpR2A=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v2 v2.4.0/go.mod h1:RDklbk79AGWmwhnvt/jBztapEOGDOx6ZbXqjP6csGnQ=

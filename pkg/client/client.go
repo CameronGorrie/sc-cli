@@ -52,7 +52,7 @@ func (c *Client) FreeNode(ctx context.Context, id int) error {
 
 // Send sends a synthdef to scsynth.
 func (c *Client) Send(ctx context.Context, name string) error {
-	if f, ok := ugens.CompleteDictionary[name]; !ok {
+	if f, ok := ugens.Lib[name]; !ok {
 		errMsg := fmt.Sprintf("no matching ugen found for name %s ", name)
 		return errors.New(errMsg)
 	} else {
