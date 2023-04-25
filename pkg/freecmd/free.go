@@ -29,7 +29,7 @@ func New(rootConfig *rootcmd.Config, out io.Writer) *ffcli.Command {
 	fs := flag.NewFlagSet("scc free", flag.ExitOnError)
 	fs.IntVar(&cfg.gid, "gid", 0, "group id")
 	fs.IntVar(&cfg.id, "id", 0, "node id")
-	fs.BoolVar(&cfg.all, "a", true, "all")
+	fs.BoolVar(&cfg.all, "a", false, "all")
 
 	rootConfig.RegisterFlags(fs)
 

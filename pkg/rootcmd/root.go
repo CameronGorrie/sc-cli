@@ -40,8 +40,8 @@ func New() (*ffcli.Command, *Config) {
 // flagsets, creating "global" flags that can be passed after any subcommand at
 // the commandline.
 func (c *Config) RegisterFlags(fs *flag.FlagSet) {
-	fs.StringVar(&c.LocalAddr, "l", "0.0.0.0:0", "local address")
-	fs.StringVar(&c.SynthAddr, "s", "127.0.0.1:57110", "scynth address")
+	fs.StringVar(&c.LocalAddr, "local", "0.0.0.0:0", "local address")
+	fs.StringVar(&c.SynthAddr, "scsynth", "127.0.0.1:57110", "scynth address")
 	fs.BoolVar(&c.Verbose, "v", false, "log verbose output")
 }
 

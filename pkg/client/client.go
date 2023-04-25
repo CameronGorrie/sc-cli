@@ -36,8 +36,16 @@ func NewClient(local, scsynth string) (*Client, error) {
 }
 
 // FreeAll frees all nodes from scsynth.
-func (c *Client) FreeAll(ctx context.Context) error {
-	return c.server.FreeAll()
+func (c *Client) FreeAll(ctx context.Context, gids ...int) error {
+	if len(gids) > 0 {
+		for _, gid := range gids {
+			if err := c.server.FreeAll(int32(gid)); err != nil {
+				return err
+			}
+		}
+	}
+
+	return c.server.FreeAll(sc.DefaultGroupID)
 }
 
 // FreeGroup frees a group from scsynth.
@@ -76,18 +84,20 @@ func (c *Client) Play(ctx context.Context, name string, params []string) error {
 
 	var err error
 	ctls := map[string]float32{}
-	for _, param := range params {
-		a := strings.Split(param, "=")
-		if len(a) < 2 {
-			err = errors.Errorf("could not parse key=value from " + param)
-		}
+	if len(params) > 0 {
+		for _, param := range params {
+			a := strings.Split(param, "=")
+			if len(a) < 2 {
+				err = errors.Errorf("could not parse key=value from " + param)
+			}
 
-		fv, err := strconv.ParseFloat(a[1], 32)
-		if err != nil {
-			errors.Wrap(err, "parsing control value")
-		}
+			fv, err := strconv.ParseFloat(a[1], 32)
+			if err != nil {
+				errors.Wrap(err, "parsing control value")
+			}
 
-		ctls[a[0]] = float32(fv)
+			ctls[a[0]] = float32(fv)
+		}
 	}
 
 	if err != nil {

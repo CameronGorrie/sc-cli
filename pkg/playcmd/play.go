@@ -27,7 +27,7 @@ func New(rootConfig *rootcmd.Config, out io.Writer) *ffcli.Command {
 	}
 
 	fs := flag.NewFlagSet("play", flag.ExitOnError)
-	fs.BoolVar(&cfg.send, "send", false, "send the synthdef to scsynth")
+	fs.BoolVar(&cfg.send, "s", false, "send the synthdef to scsynth")
 
 	rootConfig.RegisterFlags(fs)
 
@@ -54,7 +54,7 @@ func (c *Config) Exec(ctx context.Context, args []string) error {
 		}
 	}
 
-	if err := c.rootConfig.Client.Play(ctx, name, args[0:]); err != nil {
+	if err := c.rootConfig.Client.Play(ctx, name, args[1:]); err != nil {
 		return err
 	}
 
