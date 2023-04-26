@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 
-	"github.com/CameronGorrie/scc/pkg/client"
+	client "github.com/CameronGorrie/scc"
 	"github.com/peterbourgon/ff/v3/ffcli"
 )
 

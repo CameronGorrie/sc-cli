@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/CameronGorrie/scc/pkg/rootcmd"
+	"github.com/CameronGorrie/scc/internal/rootcmd"
 	"github.com/peterbourgon/ff/v3/ffcli"
 )
 

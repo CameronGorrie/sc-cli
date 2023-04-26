@@ -6,11 +6,11 @@ import (
 	"os"
 	"time"
 
-	"github.com/CameronGorrie/scc/pkg/client"
-	"github.com/CameronGorrie/scc/pkg/freecmd"
-	"github.com/CameronGorrie/scc/pkg/playcmd"
-	"github.com/CameronGorrie/scc/pkg/rootcmd"
-	"github.com/CameronGorrie/scc/pkg/sendcmd"
+	client "github.com/CameronGorrie/scc"
+	"github.com/CameronGorrie/scc/internal/freecmd"
+	"github.com/CameronGorrie/scc/internal/playcmd"
+	"github.com/CameronGorrie/scc/internal/rootcmd"
+	"github.com/CameronGorrie/scc/internal/sendcmd"
 	"github.com/peterbourgon/ff/v3/ffcli"
 )
 
