@@ -1,8 +1,10 @@
 github.com/CameronGorrie/sc v0.1.4/go.mod h1:EHhU+SQxE8HhZ/Foy9xKJwEbxBb1za0daqzn6IqIG8I=
 github.com/CameronGorrie/sc v0.1.7 h1:xB9d0Pp7QGDGzPHRUue/+CkMuIKV4UboMlY/uY7yKmI=
 github.com/CameronGorrie/sc v0.1.7/go.mod h1:EHhU+SQxE8HhZ/Foy9xKJwEbxBb1za0daqzn6IqIG8I=
-github.com/CameronGorrie/ugens v0.2.2 h1:Rtwb+mxjk3/GrTHUTcHCO1H5QreLBlf5GSHVnG/oLMY=
+github.com/CameronGorrie/scc v0.2.2/go.mod h1:9Rthbp6K+pr8sSJh8n8tU+lGW+nk9AFCfzKSVOMAV+g=
 github.com/CameronGorrie/ugens v0.2.2/go.mod h1:ngR2LMcDKYcFieERPFYzsiu/gWmbsn8PRaIkebickn0=
+github.com/CameronGorrie/ugens v0.2.3 h1:CKAQI9vJzrrZK3fEEse7m8lVJnwG/aIPMd99WSozeX8=
+github.com/CameronGorrie/ugens v0.2.3/go.mod h1:6f96XmW+ouxPuX4OFtt2zCa3Ps5cXB5aKsfZyE6qqpI=
 github.com/imdario/go-ulid v0.0.0-20180116185620-aeb52bf96595 h1:8MKHx/6AMMFGslqvr37RF7zktr3eJmY1z2FKdq3Zo/o=
 github.com/imdario/go-ulid v0.0.0-20180116185620-aeb52bf96595/go.mod h1:ugPCasYVpR6Cf8xlF0vkZdVKntj7zTgo9pLR4Si7Boo=
 github.com/pelletier/go-toml v1.9.5/go.mod h1:u1nR/EPcESfeI/szUZKdtJ0xRNbUoANCkoOuaOx1Y+c=
